@@ -1,1 +1,1 @@
-# study-notes-terraform-associate
+# Study Notes - Hashicorp Terraform Associate

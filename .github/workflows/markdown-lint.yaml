@@ -1,16 +1,17 @@
 name: Markdown Lint
-on:
-  pull_request:
+on: [pull_request]
 
 jobs:
-  runs-on: [linux]
-  steps:
+  lint:
+    runs-on: [ubuntu-latest]
+    steps:
 
-    - name: Checkout
-      uses: actions/checkout@v4
-  
-    - uses: articulate/actions-markdownlint@v1
-       with:
-         config: markdownlint-config.json
-         files: '*.md'
-         version: 0.28.1
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: linter
+        uses: "articulate/actions-markdownlint@v1"
+        with:
+          config: markdownlint-config.json
+          files: '*.md'
+          version: 0.28.1

@@ -8,10 +8,10 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: linter
         uses: "articulate/actions-markdownlint@v1"
         with:
-          config: markdownlint-config.json
+          config: .github/workflows/markdownlint-config.json
           files: '*.md'
           version: 0.28.1

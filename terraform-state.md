@@ -59,16 +59,19 @@ All of the big cloud providers offer a key vault solution, or [Hashicorp Vault](
 
 Terraform state commands are used to interact with the state file.  Whilst this is simply a JSON file, and can be viewed for troubleshooting, you should only ever interact with the state file using `terraform state` commands.
 
-**List**
+### List
+
 * `terraform state list` - to view all the current resources that the state file knows about, including modules.
 * `terraform state list aws_instance.foo` - used to view all resources for the given name.
 * `terraform state list module.foo` - used to list all the resources in a given module.
 * `terraform state list -id=i-2939a28d` - List a resource which is mapped to this specific id.
 
-**Move**
+### Move
+
 * `terraform state mv my_resource.foo my_resource.bar` - mostly used during refactoring.  When using this command, ensure you communicate with co-workers beforehand, to ensure people don't attempt to make changes and you end up with unintended results.
 
-**Remove**
+### Remove
+
 * `terraform state rm my_resource.foo` - Used to remove a particular resource from state.  This might be used to remove a resource that was manually deleted already.
 
 These commands can also be used to interact with state when the backend is hosted by HCP Terraform.

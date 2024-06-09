@@ -14,4 +14,3 @@ jobs:
         with:
           config: .github/workflows/markdownlint-config.json
           files: '*.md'
-          version: 0.28.1

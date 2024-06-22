@@ -1,5 +1,6 @@
 # Study Notes - Hashicorp Terraform Associate
 
-My notes whilst studying for the Terraform Associate exam.
+I got a free exam voucher from HashiDays, so figured I would brush up on some by the book knowledge.  These are my notes whilst studying for the Terraform Associate exam.
 
-* [Terraform state](terraform-state.md)
+* [Terraform State](1-terraform-state.md)
+* [Terraform Settings](2-terraform-settings.md)

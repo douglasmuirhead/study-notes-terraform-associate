@@ -25,29 +25,13 @@ When working with a team, its important to use remote state to ensure that:
 * The state file is synced between multiple engineer workstations
 * Only one engineer is writing changes at any one time
 
-### s3 backend
+There are many different configurations for remote state storage, which are covered [here](./2-terraform-settings.md).
 
-One popular way of storing Terraform state is by using AWS s3.  This backend supports state locking and consistency checking using Dynamo DB.
+## State locking
 
-Below is an example Terraform configuration for s3 state
+When working with remote state, it is likely that you are working as part of a team.  Given the way that state works by comparing the real-world state to Terraform's knowledge, it's important to implement **state locking**.  This ensure that whilst Terraform configuration is being applied by one engineer, it cannot also be applied by another.
 
-```hcl
-terraform {
-  backend "s3" {
-    bucket = "mybucket"
-    key    = "path/to/key"
-    region = "eu-west-1"
-  }
-}
-```
-
-**to do:** add further details about s3 state.
-
-### HCP Terraform
-
-HCP Terraform goes one further, and not only stores the remote state, but also enabled **CLI driven workflows**.  
-
-From your local workstation, you can use the `terraform login` command to connect to HCP Terraform, and use CLI commands such as `terraform plan` and `terraform apply` to trigger remote runs.
+Services such as DynamoDB in AWS are often used for this purpose.  The Azurerm backend and HCP Terraform provides state locking using native capabilities.  Find out more [here](./2-terraform-settings.md).
 
 ## Credentials
 

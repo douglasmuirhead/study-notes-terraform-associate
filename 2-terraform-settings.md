@@ -153,8 +153,53 @@ terraform {
 
 ### Remote
 
-Using the `remote` backend makes use of the HCP Terraform (Terraform Cloud) backend to store state, provides a Terraform-based CD platform, and also grants access to the **CLI-Driven workflow**.  
+Using the `remote` backend makes use of the HCP Terraform (Terraform Cloud) backend to store state, provides a Terraform-based CD platform, and also grants access to the **CLI-Driven workflow**.
 
 > **Note!**
 >
 > As of Terraform version 1.1.0, the [cloud](#the-cloud-block) backend was introduced, and it's recommended to use this rather than the `remote` backend.
+
+The `remote` backend can also be used for other Terraform backend integrations.  One example of this is [spacelift.io](spacelift.io).
+
+```hcl
+terraform {
+  backend "remote" {
+    hostname     = "spacelift.io
+    organization = "example_org"
+
+    workspaces {
+      name = "my_spacelift_stack"
+    }
+  }
+}
+```
+
+Typically Spacelift doesn't recommend that you utilise the CLI commands, as Spacelift maintains a lock on the Terraform state file, to quote Spacelift:
+
+> Unfortunately, since the state is locked by Spacelift, you cannot run the Terraform Console against the remote state unless you pull it locally. I say “unfortunately” because you may wish to use it, but just remember that running commands that could possibly modify your remote state from the CLI is actually extremely disadvised. Hence, it’s probably best that this lock stays in place.
+
+For testing and troubleshooting Terraform code, Spacelift has their own CLI modules and GUI driven workflows.
+
+## Terraform Versions
+
+Terraform, just like any other software product, it updated regularly.  With each new update, new features are added, bugs resolved, and security issues fixed, so it's important to stay up to date with the latest versions.
+
+The `terraform` top-level block is used to manage the Terraform `required_version`.  
+
+```hcl
+terraform {
+  required_version = "1.1.10"
+}
+```
+
+The code above will require that Terraform uses exactly version `1.1.10`.  If you attempt to initialize Terraform with any other version, you will recieve an error.
+
+Some other version constraints that can be used are as follows:
+
+* `>=` - Any version equal to or greater than the version specified.  This has no upper limit.
+* `~>` - Any version of that major & minor branch, but no later.  Minor version upgrades are meant to be non-distruptive and require less thought.
+* `>= 1.7.5, < 1.9.5` - Above one version, but lower than another.  Useful for avoiding specific versions.
+
+It's possible to inspect the state file to discover what version of Terraform is being used.  The following command can be used:
+
+`grep -e '"version"' -e '"terraform_version"' terraform.tfstate`

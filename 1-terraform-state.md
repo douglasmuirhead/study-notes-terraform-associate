@@ -1,9 +1,5 @@
 # Terraform State
 
-## History of Terraform State
-
-Terraform actually started out without recording real-world state.  One of the early POCs used cloud-provider tags to discover which resources were managed by Terraform.  This was problematic, however, because not all cloud providers support tags, and this approach limited what can be deployed using Terraform.
-
 ## What is it?
 
 Terraform state is a "database" which maps Terraform config to the real world.  
@@ -15,6 +11,10 @@ resource "aws_instance" "foo" {}
 ```
 
 Terraform expects that remote objects should only be bound to a single resource, so you must be careful when using `terraform import` commands to only import objects to a single resource.
+
+## History of Terraform State
+
+Terraform actually started out without recording real-world state.  One of the early POCs used cloud-provider tags to discover which resources were managed by Terraform.  This was problematic, however, because not all cloud providers support tags, and this approach limited what can be deployed using Terraform.
 
 ## Remote vs local
 

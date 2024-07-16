@@ -10,6 +10,13 @@ Terraform providers are distributed via the [Terraform Registry](https://registr
 
 The `provider` block is where providers are configured.  Some providers don't need any configuration, but some will require URLs or credentials.
 
+The primary responsibilities of Terraform Plugins are as follows:
+
+* Initialization of any included libraries used to make API calls
+* Authentication with the infrastructure provider
+* Define managed resources and data sources
+* Define functions that enable or simplify logic for practitioner configurations.
+
 ## Provider Requirements
 
 The Terraform `required_providers` is nested within the `terraform` block.  This is where provider versions are managed.
@@ -55,3 +62,21 @@ Provider version constraints work in a very similar way to [Terraform version co
 The best practice is to always specify a minimum version that your modules are known to work with, either by using `>=` or `~>`.
 
 If you are defining provider version in your module configurations, you should not configure maximum versions.  This will create scenarios where updating a module's provider version could mean updating large amounts of resources and carry a high risk level.  Instead, you should only define a minimum version, and let the root module & the maintainers of it define the maximum version.
+
+## Provider discovery
+
+When `terraform init` is run, Terraform reads configuration files in the current working directory and determines which plugins are required.  It follows this process:
+
+* Determine which plugins are required
+* Search for installed plugins already installed locally
+* Download additional plugins to the `.terraform/providers/` directory
+* Decide which plugin versions to use based on the configured [version constraints](/3-terraform-providers.md#provider-version-constraints)
+* Write a lock file to ensure Terraform will use the same plugin version until the next `terraform init`
+
+## Upgrading plugins
+
+If you need to upgrade plugins, you can use the following command:
+
+`terraform init -upgrade`
+
+This command will re-check the [Terraform Registry](registry.terraform.io) to discover whether new versions are available within the configured [version constraints](/3-terraform-providers.md#provider-version-constraints).
